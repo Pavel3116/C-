@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Для Лизы 🌸</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌸</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ===== Стили (полные, как в предыдущем ответе) ===== */
+        :root { --cream: #FBF3EE; --blush: #F7DCD6; --rose: #E8AFA6; --rose-deep: #C97B74; --plum: #4A2E30; --gold: #D9A467; --white: #FFFFFF; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; font-family: 'Jost', sans-serif; background: linear-gradient(160deg, var(--cream) 0%, var(--blush) 55%, var(--rose) 100%); color: var(--plum); overflow-x: hidden; }
+        body { min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; padding: 24px; }
+        h1, h2, h3, .display { font-family: 'Fraunces', serif; font-weight: 500; letter-spacing: -0.01em; }
+        .screen { display: none; width: 100%; max-width: 560px; text-align: center; animation: fadeUp .7s ease both; }
+        .screen.active { display: block; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+        .eyebrow { font-size: 0.75rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--rose-deep); margin-bottom: 14px; font-weight: 500; }
+        .card { background: rgba(255,255,255,0.55); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.6); border-radius: 28px; padding: 44px 36px; box-shadow: 0 20px 60px -25px rgba(74,46,48,0.35); }
+        h1.display { font-size: clamp(1.9rem, 5vw, 2.7rem); line-height: 1.15; margin-bottom: 16px; }
+        p.lead { font-size: 1.05rem; line-height: 1.6; color: #6b4b4c; margin-bottom: 30px; }
+        .btn { font-family: 'Jost', sans-serif; font-size: 1rem; font-weight: 500; padding: 15px 34px; border-radius: 999px; border: none; cursor: pointer; transition: transform .25s ease, box-shadow .25s ease; }
+        .btn-primary { background: var(--rose-deep); color: var(--white); box-shadow: 0 12px 30px -10px rgba(201,123,116,0.65); }
+        .btn-primary:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 16px 34px -10px rgba(201,123,116,0.75); }
+        .btn-ghost { background: transparent; color: var(--rose-deep); border: 1.5px solid var(--rose); margin-left: 12px; position: relative; }
+        .btn-row { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+        .heart { position: fixed; top: 110%; font-size: 1.4rem; color: var(--rose); opacity: 0.55; pointer-events: none; animation: floatUp linear infinite; z-index: 0; }
+        @keyframes floatUp { to { transform: translateY(-120vh) rotate(30deg); opacity: 0; } }
+        .field { text-align: left; margin-bottom: 20px; }
+        .field label { display: block; font-size: 0.8rem; letter-spacing: 0.05em; color: var(--rose-deep); margin-bottom: 8px; font-weight: 500; }
+        .field input { width: 100%; padding: 13px 16px; border-radius: 14px; border: 1.5px solid var(--rose); background: var(--white); font-family: 'Jost', sans-serif; font-size: 1rem; color: var(--plum); }
+        .field input:focus { outline: none; border-color: var(--rose-deep); }
+        .hint { font-size: 0.8rem; color: #8a6b6c; margin-top: -10px; margin-bottom: 22px; text-align: left; }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 8px; }
+        .opt { background: var(--white); border: 1.5px solid var(--blush); border-radius: 20px; padding: 22px 14px; cursor: pointer; transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; text-align: center; }
+        .opt:hover { transform: translateY(-4px); border-color: var(--rose-deep); box-shadow: 0 14px 28px -14px rgba(201,123,116,0.5); }
+        .opt .emoji { font-size: 1.8rem; display: block; margin-bottom: 8px; }
+        .opt .name { font-family: 'Fraunces', serif; font-size: 1rem; font-weight: 500; }
+        .detail-emoji { font-size: 2.6rem; margin-bottom: 10px; }
+        .edit { display: inline-block; min-width: 120px; border-bottom: 1.5px dashed var(--rose-deep); padding: 2px 4px; outline: none; font-weight: 500; color: var(--plum); }
+        .edit:empty:before { content: attr(data-placeholder); color: #b98d8a; }
+        .detail-row { text-align: left; font-size: 0.98rem; margin: 10px 0; color: #5c4041; }
+        .detail-row b { color: var(--rose-deep); font-weight: 500; }
+        .envelope-wrap { margin: 20px auto 10px; width: 220px; height: 170px; position: relative; cursor: pointer; }
+        .envelope { width: 220px; height: 140px; position: absolute; bottom: 0; left: 0; }
+        .envelope-back { position: absolute; inset: 0; background: var(--rose); border-radius: 10px; box-shadow: 0 20px 40px -18px rgba(74,46,48,0.5); z-index: 1; }
+        .body-tri { position: absolute; bottom: 0; left: 0; width: 0; height: 0; border-left: 110px solid transparent; border-right: 110px solid transparent; border-bottom: 56px solid var(--blush); z-index: 2; opacity: 0.9; }
+        .letter { position: absolute; left: 14px; right: 14px; top: 14px; bottom: 14px; background: var(--white); border-radius: 6px; padding: 14px; font-size: 0.72rem; line-height: 1.4; box-shadow: 0 6px 16px rgba(0,0,0,0.12); z-index: 2; display: flex; align-items: center; justify-content: center; text-align: center; transform: translateY(0); transition: transform .6s ease .15s; }
+        .envelope-wrap.open .letter { transform: translateY(-96px); }
+        .flap { position: absolute; top: 0; left: 0; width: 0; height: 0; border-left: 110px solid transparent; border-right: 110px solid transparent; border-top: 70px solid var(--rose-deep); transform-origin: top center; transition: transform .5s ease, opacity .5s ease .1s; z-index: 3; }
+        .envelope-wrap.open .flap { transform: translateY(-30px) scaleY(0.3); opacity: 0; }
+        .cert-card { display: none; margin-top: 30px; background: linear-gradient(135deg, #fffcf5, #fcf0ea); border: 2px solid var(--gold); border-radius: 20px; padding: 28px 24px; animation: fadeUp .6s ease both; position: relative; box-shadow: 0 10px 30px -10px rgba(184,134,11,0.2); }
+        .cert-card.show { display: block; }
+        .cert-card .ornament { font-size: 1.6rem; letter-spacing: 6px; color: var(--gold); margin-bottom: 4px; }
+        .cert-card h2 { font-family: 'Fraunces', serif; font-size: 1.8rem; font-weight: 600; color: var(--plum); margin: 4px 0; letter-spacing: 1px; }
+        .cert-card .sub { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: var(--rose-deep); border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold); padding: 6px 16px; display: inline-block; margin: 6px 0; }
+        .cert-card .big-number { font-size: 3.8rem; font-weight: 700; color: #8b0000; line-height: 1; margin: 2px 0; font-family: 'Fraunces', serif; text-shadow: 2px 2px 0 rgba(139,0,0,0.08); }
+        .cert-card .line { font-size: 1.4rem; font-weight: 600; color: #8b0000; letter-spacing: 1px; margin-top: -6px; }
+        .cert-card .italic { font-size: 1rem; color: #4a2a3a; font-style: italic; margin: 6px 0; }
+        .cert-card .small { font-size: 0.9rem; color: #6b5a3e; margin: 4px 0; }
+        .cert-card .footer { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--gold); font-size: 0.85rem; color: #7a6a52; }
+        .cert-card .footer em { font-style: italic; }
+        .password-error { color: #b33; font-size: 0.9rem; margin-top: 12px; min-height: 1.5em; }
+        .timer-info { font-size: 0.85rem; color: #6b4b4c; margin-top: 12px; opacity: 0.8; }
+        .timeout-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; z-index: 999; color: #fff; font-family: 'Fraunces', serif; text-align: center; padding: 20px; backdrop-filter: blur(4px); animation: fadeUp 0.6s ease both; }
+        .timeout-overlay.show { display: flex; }
+        .timeout-overlay .big-icon { font-size: 4rem; margin-bottom: 10px; }
+        .timeout-overlay h2 { font-size: 2.2rem; font-weight: 500; }
+        .timeout-overlay p { font-size: 1.1rem; color: #ccc; margin-top: 8px; }
+        @media (max-width:480px) { .grid { grid-template-columns: 1fr 1fr; } .card { padding: 32px 22px; } .cert-card .big-number { font-size: 3rem; } }
+    </style>
+</head>
+<body>
+
+    <div id="hearts"></div>
+
+    <div class="timeout-overlay" id="timeoutOverlay">
+        <div>
+            <div class="big-icon">⏳</div>
+            <h2>Время истекло</h2>
+            <p>Страница больше не доступна</p>
+            <p style="font-size: 0.9rem; color: #999; margin-top: 12px;">Попробуй зайти позже 😉</p>
+        </div>
+    </div>
+
+    <!-- SCREEN 0: ПАРОЛЬ -->
+    <div class="screen active" id="screen-password">
+        <div class="card">
+            <div class="eyebrow">🔐 Вход</div>
+            <h1 class="display" style="font-size:1.8rem;">Введи пароль</h1>
+            <p class="lead" style="font-size:0.95rem; margin-bottom:20px;">Только для тех, кто знает секретное слово</p>
+            <div class="field">
+                <label for="passwordInput">Кодовое слово</label>
+                <input type="password" id="passwordInput" placeholder="…" style="text-align:center; font-size:1.2rem;">
+            </div>
+            <div class="password-error" id="passwordError"></div>
+            <div class="btn-row" style="justify-content:center;">
+                <button class="btn btn-primary" onclick="checkPassword()">Войти 🌸</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCREEN 1: приглашение -->
+    <div class="screen" id="screen-invite">
+        <div class="card">
+            <div class="eyebrow">Для Лизы</div>
+            <h1 class="display">Лиза, я хочу тебя кое о чём спросить…</h1>
+            <p class="lead">Предлагаю провести вечер, который мы запомним надолго. <br>Только ты, я и немного магии. Пойдёшь со мной на свидание?</p>
+            <div class="btn-row">
+                <button class="btn btn-primary" onclick="goTo('screen-date')">Да, конечно ♥</button>
+                <button class="btn btn-ghost" id="noBtn">Нет</button>
+            </div>
+            <div class="timer-info" id="timerDisplay">⏱️ Страница исчезнет через 5:00</div>
+        </div>
+    </div>
+
+    <!-- SCREEN 2: дата и время -->
+    <div class="screen" id="screen-date">
+        <div class="card">
+            <div class="eyebrow">Шаг 1</div>
+            <h2 class="display" style="font-size:1.6rem; margin-bottom:22px;">Когда тебе удобно?</h2>
+            <div class="field">
+                <label for="dateInput">Дата</label>
+                <input type="date" id="dateInput" min="2026-08-21">
+            </div>
+            <div class="hint">Только после 20 августа — мне нужно время, чтобы всё подготовить 😉</div>
+            <div class="field">
+                <label for="timeInput">Время</label>
+                <input type="time" id="timeInput" value="18:00">
+            </div>
+            <div class="btn-row" style="margin-top:8px;">
+                <button class="btn btn-primary" onclick="confirmDate()">Дальше</button>
+            </div>
+            <div class="timer-info" id="timerDisplay2">⏱️ Страница исчезнет через 5:00</div>
+        </div>
+    </div>
+
+    <!-- SCREEN 3: выбор активности -->
+    <div class="screen" id="screen-activities">
+        <div class="card">
+            <div class="eyebrow">Шаг 2</div>
+            <h2 class="display" style="font-size:1.6rem; margin-bottom:6px;">Куда пойдём?</h2>
+            <p class="lead" style="margin-bottom:18px; font-size:0.92rem;">Выбери занятие по душе — остальное я организую.</p>
+            <div class="grid" id="activityGrid"></div>
+            <div class="timer-info" id="timerDisplay3">⏱️ Страница исчезнет через 5:00</div>
+        </div>
+    </div>
+
+    <!-- SCREEN 4: детали -->
+    <div class="screen" id="screen-detail">
+        <div class="card">
+            <div class="detail-emoji" id="detailEmoji">🎱</div>
+            <h2 class="display" id="detailName" style="font-size:1.6rem; margin-bottom:6px;"></h2>
+            <p class="lead" id="detailBlurb" style="font-size:0.95rem;"></p>
+            <div class="detail-row"><b>Дата и время:</b> <span id="detailWhen"></span></div>
+            <div class="btn-row" style="margin-top:22px;">
+                <button class="btn btn-ghost" onclick="goTo('screen-activities')">Выбрать другое</button>
+                <button class="btn btn-primary" onclick="goTo('screen-envelope')">Всё точно, жду встречи ♥</button>
+            </div>
+            <div class="timer-info" id="timerDisplay4">⏱️ Страница исчезнет через 5:00</div>
+        </div>
+    </div>
+
+    <!-- SCREEN 5: конверт -->
+    <div class="screen" id="screen-envelope">
+        <div class="card">
+            <div class="eyebrow">Последнее</div>
+            <h2 class="display" style="font-size:1.5rem; margin-bottom:4px;">Открой конверт</h2>
+            <p class="lead" style="font-size:0.9rem;">Там кое-что специально для тебя.</p>
+            <div class="envelope-wrap" id="envelopeWrap" onclick="openEnvelope()">
+                <div class="envelope">
+                    <div class="envelope-back"></div>
+                    <div class="letter">С нетерпением жду нашего свидания 🤍</div>
+                    <div class="body-tri"></div>
+                    <div class="flap"></div>
+                </div>
+            </div>
+            <div class="cert-card" id="certCard">
+                <div class="ornament">✦ ✦ ✦</div>
+                <h2>СЕРТИФИКАТ-СЮРПРИЗ</h2>
+                <div class="sub">Даёт право на</div>
+                <div class="big-number">5</div>
+                <div class="line">кунилингуса</div>
+                <div class="italic">в любой позе, которую ты выберешь</div>
+                <div class="small">Ты задаёшь правила — я исполняю с удовольствием</div>
+                <div class="footer">✨ Используй когда и где захочешь. <em>P.S. Остальное при встрече 😉</em></div>
+            </div>
+            <div class="timer-info" id="timerDisplay5">⏱️ Страница исчезнет через 5:00</div>
+        </div>
+    </div>
+
+    <script>
+        // ====================================================
+        // 1. НАСТРОЙКА ОТПРАВКИ (FormSubmit.co – БЕЗ РЕГИСТРАЦИИ)
+        // ====================================================
+        const YOUR_EMAIL = 'pavlikgena23@gmail.com'; // Сюда ставим свою почту
+        const FORM_SUBMIT_URL = `https://formsubmit.co/${YOUR_EMAIL}`;
+
+        // ====================================================
+        // 2. ПЕРЕМЕННЫЕ
+        // ====================================================
+        let chosenWhen = '';
+        let selectedActivity = '';
+        let selectedActivityBlurb = '';
+        let selectedDateTime = '';
+        let envelopeOpened = false;
+        let timerInterval = null;
+        let timeLeft = 300;
+
+        // ====================================================
+        // 3. ФУНКЦИЯ ОТПРАВКИ – БЕЗ ТОКЕНОВ, БЕЗ РЕГИСТРАЦИИ
+        // ====================================================
+        function sendDataToEmail() {
+            const formData = new FormData();
+            formData.append('_subject', 'Новое свидание с Лизой ❤️');
+            formData.append('Дата и время', selectedDateTime);
+            formData.append('Активность', selectedActivity);
+            formData.append('Подробности', selectedActivityBlurb);
+            formData.append('_captcha', 'false'); // отключаем капчу
+
+            fetch(FORM_SUBMIT_URL, {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('✅ Данные отправлены на почту');
+                } else {
+                    console.warn('⚠️ Не удалось отправить данные');
+                }
+            })
+            .catch(error => {
+                console.error('❌ Ошибка отправки:', error);
+            });
+        }
+
+        // ====================================================
+        // 4. ОТКРЫТИЕ КОНВЕРТА
+        // ====================================================
+        function openEnvelope() {
+            if (envelopeOpened) return;
+            const wrap = document.getElementById('envelopeWrap');
+            wrap.classList.add('open');
+            setTimeout(() => {
+                document.getElementById('certCard').classList.add('show');
+            }, 500);
+
+            if (selectedDateTime && selectedActivity) {
+                sendDataToEmail();
+                envelopeOpened = true;
+            } else {
+                console.warn('Не все данные заполнены, отправка отложена');
+            }
+        }
+
+        // ====================================================
+        // 5. ОСТАЛЬНЫЕ ФУНКЦИИ (пароль, таймер, навигация, активности)
+        // ====================================================
+
+        // --- floating hearts ---
+        const heartsWrap = document.getElementById('hearts');
+        for (let i = 0; i < 16; i++) {
+            const h = document.createElement('div');
+            h.className = 'heart';
+            h.textContent = ['🤍', '🌸', '♥', '✨'][Math.floor(Math.random() * 4)];
+            h.style.left = Math.random() * 100 + 'vw';
+            h.style.animationDuration = (10 + Math.random() * 10) + 's';
+            h.style.animationDelay = (Math.random() * 10) + 's';
+            h.style.fontSize = (1 + Math.random() * 1.2) + 'rem';
+            heartsWrap.appendChild(h);
+        }
+
+        // --- пароль ---
+        const PASSWORD = 'liza';
+
+        function checkPassword() {
+            const input = document.getElementById('passwordInput');
+            const error = document.getElementById('passwordError');
+            if (input.value.toLowerCase() === PASSWORD.toLowerCase()) {
+                error.textContent = '';
+                document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+                document.getElementById('screen-invite').classList.add('active');
+                input.value = '';
+                startTimer();
+            } else {
+                error.textContent = '❌ Неверный пароль, попробуй ещё раз';
+                input.value = '';
+                input.focus();
+            }
+        }
+
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            timeLeft = 300;
+            updateTimerDisplay(timeLeft);
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay(timeLeft);
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    timerInterval = null;
+                    document.getElementById('timeoutOverlay').classList.add('show');
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            const formatted = `${mins}:${secs.toString().padStart(2, '0')}`;
+            document.querySelectorAll('.timer-info').forEach(el => {
+                el.textContent = seconds > 0 ? `⏱️ Страница исчезнет через ${formatted}` : '⏱️ Время вышло';
+            });
+        }
+
+        document.getElementById('passwordInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') { e.preventDefault(); checkPassword(); }
+        });
+
+        // --- кнопка "Нет" ---
+        const noBtn = document.getElementById('noBtn');
+        noBtn.addEventListener('mouseenter', () => {
+            const x = (Math.random() - 0.5) * 220;
+            const y = (Math.random() - 0.5) * 80;
+            noBtn.style.transform = `translate(${x}px, ${y}px)`;
+        });
+        noBtn.addEventListener('click', (e) => e.preventDefault());
+
+        // --- навигация ---
+        function goTo(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- дата ---
+        function confirmDate() {
+            const d = document.getElementById('dateInput').value;
+            const t = document.getElementById('timeInput').value;
+            if (!d) { alert('Выбери дату 🌸'); return; }
+            const dateObj = new Date(d + 'T00:00:00');
+            const formatted = dateObj.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' });
+            chosenWhen = `${formatted}, ${t}`;
+            selectedDateTime = chosenWhen;
+            goTo('screen-activities');
+        }
+
+        // --- активности ---
+        const activities = [
+            { id: 'billiards', name: 'Бильярд', emoji: '🎱', blurb: 'Пара часов бильярда, музыка и лёгкий флирт над столом.' },
+            { id: 'cinema', name: 'Кино', emoji: '🎬', blurb: 'Уютный зал, попкорн и фильм, который выберем вместе.' },
+            { id: 'clay', name: 'Лепка', emoji: '🏺', blurb: 'Мастер-класс по гончарному делу — слепим что-то своими руками.' },
+            { id: 'skydive', name: 'Прыжок с парашютом', emoji: '🪂', blurb: 'Тандем-прыжок с инструктором — адреналин на двоих.' },
+            { id: 'karting', name: 'Картинг', emoji: '🏎️', blurb: 'Пара кругов на трассе — узнаем, кто из нас быстрее.' },
+            { id: 'custom', name: 'Своё предложу', emoji: '💡', blurb: '' }
+        ];
+
+        const grid = document.getElementById('activityGrid');
+        activities.forEach(a => {
+            const div = document.createElement('div');
+            div.className = 'opt';
+            div.innerHTML = `<span class="emoji">${a.emoji}</span><div class="name">${a.name}</div>`;
+            div.onclick = () => showDetail(a);
+            grid.appendChild(div);
+        });
+
+        function showDetail(a) {
+            selectedActivity = a.name;
+            selectedActivityBlurb = a.blurb || '—';
+            document.getElementById('detailEmoji').textContent = a.emoji;
+            document.getElementById('detailName').textContent = a.name;
+            document.getElementById('detailWhen').textContent = selectedDateTime || '— дата не выбрана —';
+            const blurbEl = document.getElementById('detailBlurb');
+            if (a.id === 'custom') {
+                blurbEl.setAttribute('contenteditable', 'true');
+                blurbEl.classList.add('edit');
+                blurbEl.setAttribute('data-placeholder', '— напиши сюда свою идею —');
+                blurbEl.textContent = '';
+            } else {
+                blurbEl.removeAttribute('contenteditable');
+                blurbEl.classList.remove('edit');
+                blurbEl.textContent = a.blurb;
+            }
+            goTo('screen-detail');
+        }
+
+        // --- инициализация ---
+        document.addEventListener('DOMContentLoaded', function() {
+            const dateInput = document.getElementById('dateInput');
+            if (dateInput) dateInput.value = '2026-08-21';
+        });
+    </script>
+</body>
+</html>
